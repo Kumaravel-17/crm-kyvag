@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // A self-contained server in .next/standalone, for the Docker image
+  output: "standalone",
   outputFileTracingRoot: path.join(__dirname),
   // Lets a verification build use its own folder so it never clobbers a running `next dev`
   distDir: process.env.NEXT_DIST_DIR || ".next",
