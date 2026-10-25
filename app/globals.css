@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* dark: applies when html has data-theme="dark" (set by the theme toggle) */
+@custom-variant dark (html[data-theme="dark"] &);
+
+/* Kyvag CRM — token names follow moibook-counter so both apps share one vocabulary.
+   Palette: porcelain ground, burgundy accent, bronze highlight, wine-dark nav. */
+:root {
+  --background: #f4f1f0;
+  --foreground: #241519;
+  --foreground-secondary: #4b383d;
+  --foreground-tertiary: #86737a;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-sunken: #f0eae8;
+  --input-bg: #ffffff;
+  --input-border: rgba(84, 24, 38, 0.18);
+  --border: rgba(84, 24, 38, 0.12);
+  --border-strong: rgba(84, 24, 38, 0.22);
+  --divider: rgba(84, 24, 38, 0.08);
+
+  /* Burgundy — primary actions, links, active states */
+  --accent: #6d1d2e;
+  --accent-hover: #8b2a3f;
+  --accent-active: #551523;
+  --accent-foreground: #fbf3ee;
+  /* Bronze — highlights, eyebrows, score fills */
+  --bronze: #9c6d3c;
+  --bronze-light: #c49a6a;
+  /* Wine-dark — navigation band */
+  --nav-bg: #2a0f16;
+  --nav-foreground: #f6ebe6;
+  --nav-foreground-muted: rgba(246, 235, 230, 0.68);
+
+  --success: #2f8a62;
+  --warning: #b06e16;
+  --error: #b5463b;
+  --info: #3f6aa8;
+
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(84, 24, 38, 0.06);
+  --shadow-md: 0 6px 18px -6px rgba(84, 24, 38, 0.16);
+  --shadow-lg: 0 18px 44px -18px rgba(84, 24, 38, 0.3);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #140d0f;
+  --foreground: #f2e8e4;
+  --foreground-secondary: #cdbcb7;
+  --foreground-tertiary: #9c888d;
+  --surface: #1c1316;
+  --surface-elevated: #261a1e;
+  --surface-sunken: #110a0c;
+  --input-bg: #261a1e;
+  --input-border: rgba(242, 220, 210, 0.16);
+  --border: rgba(242, 220, 210, 0.1);
+  --border-strong: rgba(242, 220, 210, 0.18);
+  --divider: rgba(242, 220, 210, 0.06);
+
+  --accent: #c45a6f;
+  --accent-hover: #d6788b;
+  --accent-active: #a8475b;
+  --accent-foreground: #1a0c10;
+  --bronze: #c99c6a;
+  --bronze-light: #e2bc8e;
+  --nav-bg: #0d0709;
+  --nav-foreground: #f2e8e4;
+  --nav-foreground-muted: rgba(242, 232, 228, 0.62);
+
+  --success: #7fc4a2;
+  --warning: #e3ab62;
+  --error: #e08a80;
+  --info: #8fb0de;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 22px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 20px 48px -18px rgba(0, 0, 0, 0.75);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-tertiary: var(--foreground-tertiary);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-input-bg: var(--input-bg);
+  --color-input-border: var(--input-border);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-divider: var(--divider);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-bronze: var(--bronze);
+  --color-bronze-light: var(--bronze-light);
+  --color-nav-bg: var(--nav-bg);
+  --color-nav-foreground: var(--nav-foreground);
+  --color-nav-foreground-muted: var(--nav-foreground-muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --font-display: var(--font-bodoni), "Bodoni 72", "Didot", Georgia, serif;
+  --font-sans: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --animate-rise: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  @keyframes rise {
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { text-wrap: balance; }
+::selection { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+select option { background: var(--surface); }
+
+/* Hide scrollbar while keeping scroll behavior */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* Page-load fade-up, staggered across a page's top-level sections */
+.reveal > * { animation: var(--animate-rise); }
+.reveal > *:nth-child(2) { animation-delay: 0.05s; }
+.reveal > *:nth-child(3) { animation-delay: 0.1s; }
+.reveal > *:nth-child(4) { animation-delay: 0.15s; }
+.reveal > *:nth-child(5) { animation-delay: 0.2s; }
+
+.chart text { fill: var(--foreground-tertiary); font-size: 10.5px; font-family: var(--font-manrope), sans-serif; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
