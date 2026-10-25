@@ -28,7 +28,7 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
         <div className="flex flex-wrap items-center gap-5">
           <Avatar name={l.name} size="lg" />
           <div>
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.24em] text-bronze">{l.id} · {l.category}</p>
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.24em] text-secondary">{l.id} · {l.category}</p>
             <h1 className="mt-1.5 font-display text-[clamp(28px,3.2vw,44px)] leading-[1.06] tracking-tight">{l.company}</h1>
             <div className="mt-2.5 flex flex-wrap items-center gap-2 text-foreground-tertiary">
               <span className="text-foreground">{l.name}</span>·<span>{l.city}</span>·<StagePill stage={l.stage} />{isHot(l) && <Hot />}
@@ -74,8 +74,8 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
                 ["Owner", <span key="o" className="inline-flex items-center gap-2"><Avatar name={owner.name} size="sm" />{owner.name}</span>],
               ]} />
               {l.duplicates && (
-                <div className="mt-4 flex items-center gap-2.5 rounded-lg bg-bronze/10 px-3 py-2.5 text-[12.5px]">
-                  <GitMerge className="size-4 shrink-0 text-bronze" />
+                <div className="mt-4 flex items-center gap-2.5 rounded-lg bg-secondary/10 px-3 py-2.5 text-[12.5px]">
+                  <GitMerge className="size-4 shrink-0 text-secondary" />
                   Also seen on {l.duplicates.map((d) => CHANNEL_LABEL[d]).join(", ")}. Merged by phone.
                 </div>
               )}

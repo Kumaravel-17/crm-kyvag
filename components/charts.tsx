@@ -59,7 +59,7 @@ export function Sparkline({ data, w = 84, h = 26 }: { data: number[]; w?: number
     <svg viewBox={`0 0 ${w} ${h}`} width={w} height={h} aria-hidden>
       <path d={`${d}L${x(data.length - 1)},${h}L2,${h}Z`} fill="color-mix(in srgb, var(--accent) 10%, transparent)" />
       <path d={d} fill="none" stroke="var(--accent)" strokeWidth="1.4" />
-      <circle cx={x(data.length - 1)} cy={y(data[data.length - 1])} r="2.5" fill="var(--bronze)" />
+      <circle cx={x(data.length - 1)} cy={y(data[data.length - 1])} r="2.5" fill="var(--accent)" />
     </svg>
   );
 }
@@ -71,7 +71,7 @@ export function BarList({ items }: { items: { label: React.ReactNode; value: num
       {items.map((it, k) => (
         <div key={k}>
           <div className="mb-1.5 flex justify-between gap-3 text-[12.5px]"><span>{it.label}</span><span className="tabular-nums">{it.display}</span></div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-surface-sunken ring-1 ring-divider"><div className="h-full rounded-full bg-gradient-to-r from-bronze to-accent" style={{ width: `${(it.value / max) * 100}%` }} /></div>
+          <div className="h-1.5 overflow-hidden rounded-full bg-surface-sunken ring-1 ring-divider"><div className="h-full rounded-full bg-accent" style={{ width: `${(it.value / max) * 100}%` }} /></div>
         </div>
       ))}
     </div>

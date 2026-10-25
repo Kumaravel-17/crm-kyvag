@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BarChart3, Bell, LayoutDashboard, Menu, PlusCircle, Search, Users, X } from "lucide-react";
 import { LEADS } from "@/lib/data";
 import { ThemeToggle } from "../theme/ThemeToggle";
+import { Logo } from "./Logo";
 import { IconButton, buttonClass } from "../ui";
 
 const NAV = [
@@ -42,12 +43,8 @@ function Sidebar({ path, open, onClose }: { path: string; open: boolean; onClose
     >
       {/* Brand */}
       <div className="flex h-[66px] items-center justify-between border-b border-border px-5">
-        <Link href="/" className="group flex items-end gap-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
-          <span className="w-[3px] self-stretch rounded-full bg-gradient-to-b from-bronze to-accent" aria-hidden />
-          <span className="flex flex-col leading-none">
-            <span className="mb-1 text-[9.5px] font-bold uppercase tracking-[0.3em] text-bronze">Kyvag</span>
-            <span className="font-display text-[28px] font-semibold italic leading-none tracking-tight text-transparent bg-gradient-to-r from-accent via-accent to-bronze bg-clip-text">Leads</span>
-          </span>
+        <Link href="/" aria-label="Kyvag CRM home" className="rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+          <Logo tag="CRM" />
         </Link>
         <button onClick={onClose} aria-label="Close menu" className="flex size-9 cursor-pointer items-center justify-center rounded-lg text-foreground-tertiary hover:bg-border/50 lg:hidden">
           <X className="size-[18px]" />
@@ -81,11 +78,11 @@ function Sidebar({ path, open, onClose }: { path: string; open: boolean; onClose
       {/* Footer */}
       <div className="mt-auto flex flex-col gap-4 p-4">
         <div className="rounded-xl border border-border bg-surface p-4 shadow-sm">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-bronze">This month</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">This month</p>
           <p className="mt-1 font-display text-[22px] leading-tight">₹16.7 L MRR</p>
           <p className="mt-0.5 text-[12px] text-foreground-tertiary">83% of ₹20 L target</p>
           <div className="mt-3 h-1 overflow-hidden rounded-full bg-surface-sunken ring-1 ring-divider">
-            <div className="h-full w-[83%] rounded-full bg-gradient-to-r from-bronze to-accent" />
+            <div className="h-full w-[83%] rounded-full bg-accent" />
           </div>
         </div>
         <div className="flex items-center gap-3 px-1">

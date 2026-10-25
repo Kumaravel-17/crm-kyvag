@@ -30,7 +30,7 @@ export default function Overview() {
         <StatCard icon={UserPlus} label="New leads · today" value="186" delta="+12.4%" deltaUp note="vs last Sunday" aside={<Sparkline data={DAILY_LEADS.slice(-14)} />} />
         <StatCard icon={Timer} label="Median first reply" value={<>3<small>m</small> 48<small>s</small></>} delta="−1m 12s" deltaUp note="this week" aside={<Badge tone="success">Under 5 min</Badge>} />
         <StatCard icon={TrendingUp} label="Trial → Paid" value={<>37.2<small>%</small></>} delta="+2.1 pts" deltaUp note="vs September" aside={<Sparkline data={DAILY_PAID.slice(-14)} />} />
-        <StatCard icon={IndianRupee} label="New MRR · October" value={<>₹4.1<small>L</small></>} delta="−3.0%" note="vs September pace" aside={<Badge tone="bronze">164 stores</Badge>} />
+        <StatCard icon={IndianRupee} label="New MRR · October" value={<>₹4.1<small>L</small></>} delta="−3.0%" note="vs September pace" aside={<Badge tone="secondary">164 stores</Badge>} />
       </div>
 
       <div className="grid grid-cols-12 gap-4 lg:gap-5">

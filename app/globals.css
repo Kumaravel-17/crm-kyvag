@@ -4,45 +4,43 @@
 @custom-variant dark (html[data-theme="dark"] &);
 
 /* Kyvag CRM — token names follow moibook-counter so both apps share one vocabulary.
-   Palette: porcelain ground, burgundy accent, bronze highlight, wine-dark nav. */
+   Palette: white ground, Kyvag purple (#af00f8) accent from the logo, lighter purple secondary. */
 :root {
-  --background: #f4f1f0;
-  --foreground: #241519;
-  --foreground-secondary: #4b383d;
-  --foreground-tertiary: #86737a;
+  --background: #ffffff;
+  --foreground: #16131d;
+  --foreground-secondary: #433e52;
+  --foreground-tertiary: #76718a;
   --surface: #ffffff;
   --surface-elevated: #ffffff;
-  --surface-sunken: #f0eae8;
+  --surface-sunken: #f1eff6;
   --input-bg: #ffffff;
-  --input-border: rgba(84, 24, 38, 0.18);
-  --border: rgba(84, 24, 38, 0.12);
-  --border-strong: rgba(84, 24, 38, 0.22);
-  --divider: rgba(84, 24, 38, 0.08);
+  --input-border: rgba(40, 20, 80, 0.16);
+  --border: rgba(40, 20, 80, 0.1);
+  --border-strong: rgba(40, 20, 80, 0.18);
+  --divider: rgba(40, 20, 80, 0.07);
 
-  /* Burgundy — primary actions, links, active states */
-  --accent: #6d1d2e;
-  --accent-hover: #8b2a3f;
-  --accent-active: #551523;
-  --accent-foreground: #fbf3ee;
-  /* Bronze — highlights, eyebrows, score fills */
-  --bronze: #9c6d3c;
-  --bronze-light: #c49a6a;
-  /* Wine-dark — navigation band */
-  --nav-bg: #2a0f16;
-  --nav-foreground: #f6ebe6;
-  --nav-foreground-muted: rgba(246, 235, 230, 0.68);
+  /* Kyvag purple — primary actions, links, active states */
+  --accent: #af00f8;
+  --accent-hover: #9800d8;
+  --accent-active: #7f00b5;
+  --accent-foreground: #ffffff;
+  /* Lighter Kyvag purple — labels, channel chips, secondary chart series */
+  --secondary: #c040ff;
+  --secondary-light: #e2a8ff;
+  /* Teal — the Demo Booked stage */
+  --aqua: #0d8f9c;
 
-  --success: #2f8a62;
-  --warning: #b06e16;
-  --error: #b5463b;
-  --info: #3f6aa8;
+  --success: #16a34a;
+  --warning: #d97706;
+  --error: #dc2626;
+  --info: #2563eb;
 
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-xl: 24px;
-  --shadow-sm: 0 1px 3px rgba(84, 24, 38, 0.06);
-  --shadow-md: 0 6px 18px -6px rgba(84, 24, 38, 0.16);
-  --shadow-lg: 0 18px 44px -18px rgba(84, 24, 38, 0.3);
+  --shadow-sm: 0 1px 2px rgba(30, 10, 60, 0.05), 0 1px 3px rgba(30, 10, 60, 0.04);
+  --shadow-md: 0 8px 20px -8px rgba(60, 10, 110, 0.16);
+  --shadow-lg: 0 20px 44px -18px rgba(60, 10, 110, 0.28);
   --duration-fast: 150ms;
   --duration-normal: 250ms;
   --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -50,35 +48,33 @@
 }
 
 [data-theme="dark"] {
-  --background: #140d0f;
-  --foreground: #f2e8e4;
-  --foreground-secondary: #cdbcb7;
-  --foreground-tertiary: #9c888d;
-  --surface: #1c1316;
-  --surface-elevated: #261a1e;
-  --surface-sunken: #110a0c;
-  --input-bg: #261a1e;
-  --input-border: rgba(242, 220, 210, 0.16);
-  --border: rgba(242, 220, 210, 0.1);
-  --border-strong: rgba(242, 220, 210, 0.18);
-  --divider: rgba(242, 220, 210, 0.06);
+  --background: #0b0a0f;
+  --foreground: #f1eff7;
+  --foreground-secondary: #c4bfd4;
+  --foreground-tertiary: #8b869d;
+  --surface: #14121b;
+  --surface-elevated: #1b1824;
+  --surface-sunken: #0f0d15;
+  --input-bg: #1b1824;
+  --input-border: rgba(220, 200, 255, 0.14);
+  --border: rgba(220, 200, 255, 0.09);
+  --border-strong: rgba(220, 200, 255, 0.16);
+  --divider: rgba(220, 200, 255, 0.06);
 
-  --accent: #c45a6f;
-  --accent-hover: #d6788b;
-  --accent-active: #a8475b;
-  --accent-foreground: #1a0c10;
-  --bronze: #c99c6a;
-  --bronze-light: #e2bc8e;
-  --nav-bg: #0d0709;
-  --nav-foreground: #f2e8e4;
-  --nav-foreground-muted: rgba(242, 232, 228, 0.62);
+  --accent: #b733ff;
+  --accent-hover: #c65cff;
+  --accent-active: #9f12ec;
+  --accent-foreground: #ffffff;
+  --secondary: #d27aff;
+  --secondary-light: #ecc4ff;
+  --aqua: #2dd4bf;
 
-  --success: #7fc4a2;
-  --warning: #e3ab62;
-  --error: #e08a80;
-  --info: #8fb0de;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --info: #60a5fa;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.45);
   --shadow-md: 0 8px 22px -8px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 20px 48px -18px rgba(0, 0, 0, 0.75);
   color-scheme: dark;
@@ -101,11 +97,9 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-active: var(--accent-active);
   --color-accent-foreground: var(--accent-foreground);
-  --color-bronze: var(--bronze);
-  --color-bronze-light: var(--bronze-light);
-  --color-nav-bg: var(--nav-bg);
-  --color-nav-foreground: var(--nav-foreground);
-  --color-nav-foreground-muted: var(--nav-foreground-muted);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-aqua: var(--aqua);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
@@ -118,8 +112,8 @@
   --radius-lg: var(--radius-lg);
   --radius-xl: var(--radius-xl);
 
-  --font-display: var(--font-bodoni), "Bodoni 72", "Didot", Georgia, serif;
-  --font-sans: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   --animate-rise: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -132,12 +126,16 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3 { text-wrap: balance; }
+/* Headings and big numbers: clean, tight, bold — matches the KYVAG wordmark */
+@layer base {
+  .font-display { font-weight: 700; letter-spacing: -0.02em; }
+}
 ::selection { background: color-mix(in srgb, var(--accent) 14%, transparent); }
 select option { background: var(--surface); }
 
@@ -152,7 +150,7 @@ select option { background: var(--surface); }
 .reveal > *:nth-child(4) { animation-delay: 0.15s; }
 .reveal > *:nth-child(5) { animation-delay: 0.2s; }
 
-.chart text { fill: var(--foreground-tertiary); font-size: 10.5px; font-family: var(--font-manrope), sans-serif; }
+.chart text { fill: var(--foreground-tertiary); font-size: 10.5px; font-family: var(--font-jakarta), sans-serif; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

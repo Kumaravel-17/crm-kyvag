@@ -3,7 +3,7 @@ import { BarList, Donut, Funnel } from "@/components/charts";
 import { Avatar, Badge, Card, CardBody, CardHeader, ChannelIcon, ChannelTag, Page, PageTitle, StatCard } from "@/components/ui";
 import { CAMPAIGNS, CHANNEL_LABEL, FUNNEL, REPS, SOURCES, inr, inrShort } from "@/lib/data";
 
-const MIX_COLORS = ["var(--accent)", "var(--bronze)", "var(--accent-hover)", "var(--bronze-light)", "var(--info)", "var(--success)", "var(--warning)", "var(--foreground-tertiary)"];
+const MIX_COLORS = ["var(--accent)", "var(--accent-active)", "var(--secondary)", "var(--secondary-light)", "var(--foreground-secondary)", "var(--foreground-tertiary)", "var(--border-strong)", "var(--divider)"];
 const th = "px-4 py-3 text-[10.5px] font-semibold uppercase tracking-wider text-foreground-tertiary whitespace-nowrap";
 const td = "px-4 py-3.5";
 

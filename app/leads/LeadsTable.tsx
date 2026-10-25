@@ -42,8 +42,8 @@ export default function LeadsTable() {
   return (
     <>
       {!merged && dupes.length > 0 && (
-        <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-bronze/30 bg-gradient-to-r from-bronze/10 to-transparent px-5 py-4">
-          <span className="flex size-9 items-center justify-center rounded-lg bg-bronze/15 text-bronze"><GitMerge className="size-[18px]" /></span>
+        <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-accent/20 bg-accent/[0.04] px-5 py-4">
+          <span className="flex size-9 items-center justify-center rounded-lg bg-secondary/15 text-secondary"><GitMerge className="size-[18px]" /></span>
           <div className="min-w-[220px] flex-1">
             <p className="font-semibold">{dupes.length} possible duplicate{dupes.length > 1 ? "s" : ""} found</p>
             <p className="text-[12.5px] text-foreground-tertiary">
@@ -93,7 +93,7 @@ export default function LeadsTable() {
         </div>
 
         {/* Phones and small tablets: one card per lead instead of the wide table */}
-        <ul className="flex flex-col gap-3 bg-surface-sunken/40 p-3 md:hidden">
+        <ul className="flex flex-col gap-3 p-3 md:hidden">
           {pageRows.map((l) => {
             const owner = repById(l.ownerId);
             return (
@@ -111,7 +111,7 @@ export default function LeadsTable() {
                     <StagePill stage={l.stage} />
                   </div>
 
-                  <dl className="grid grid-cols-2 gap-x-4 gap-y-2.5 rounded-lg bg-surface-sunken/60 px-3 py-2.5 text-[12.5px] ring-1 ring-divider">
+                  <dl className="grid grid-cols-2 gap-x-4 gap-y-2.5 border-y border-divider py-3 text-[12.5px]">
                     <div className="min-w-0">
                       <dt className="text-[10.5px] font-semibold uppercase tracking-wider text-foreground-tertiary">Source</dt>
                       <dd className="mt-0.5"><ChannelTag channel={l.source} /></dd>
@@ -231,7 +231,7 @@ function AddLead({ onClose, onSave }: { onClose: () => void; onSave: () => void 
       >
         <div className="flex items-start justify-between gap-3 border-b border-border px-6 py-5">
           <div>
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.24em] text-bronze">Manual entry</p>
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.24em] text-secondary">Manual entry</p>
             <h2 className="mt-1 font-display text-[28px]">Add a lead</h2>
           </div>
           <button type="button" aria-label="Close" onClick={onClose} className="flex size-9 cursor-pointer items-center justify-center rounded-lg text-foreground-tertiary hover:bg-border/50 hover:text-foreground">

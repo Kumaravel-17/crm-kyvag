@@ -18,7 +18,7 @@ export function Avatar({ name, size = "md" }: { name: string; size?: "sm" | "md"
 
 export function ChannelIcon({ channel, className = "" }: { channel: Channel; className?: string }) {
   return (
-    <span title={CHANNEL_LABEL[channel]} className={`flex size-6 shrink-0 items-center justify-center rounded-md bg-bronze/12 text-bronze ${className}`}>
+    <span title={CHANNEL_LABEL[channel]} className={`flex size-6 shrink-0 items-center justify-center rounded-md bg-secondary/12 text-secondary ${className}`}>
       <ChannelGlyph channel={channel} className="size-3.5" />
     </span>
   );
@@ -38,17 +38,18 @@ export function Score({ value }: { value: number }) {
     <span className="inline-flex items-center gap-2.5">
       <b className="min-w-[22px] font-bold tabular-nums">{value}</b>
       <span className="h-1.5 w-16 overflow-hidden rounded-full bg-surface-sunken ring-1 ring-divider">
-        <i className="block h-full rounded-full bg-gradient-to-r from-bronze to-accent" style={{ width: `${value}%` }} />
+        <i className="block h-full rounded-full bg-accent" style={{ width: `${value}%` }} />
       </span>
     </span>
   );
 }
 
-type Tone = "neutral" | "accent" | "bronze" | "success" | "warning" | "error" | "info";
+type Tone = "neutral" | "accent" | "secondary" | "aqua" | "success" | "warning" | "error" | "info";
 const TONES: Record<Tone, string> = {
   neutral: "bg-surface-sunken text-foreground-secondary ring-border",
   accent: "bg-accent/10 text-accent ring-accent/15",
-  bronze: "bg-bronze/12 text-bronze ring-bronze/20",
+  secondary: "bg-secondary/12 text-secondary ring-secondary/20",
+  aqua: "bg-aqua/10 text-aqua ring-aqua/20",
   success: "bg-success/10 text-success ring-success/20",
   warning: "bg-warning/10 text-warning ring-warning/20",
   error: "bg-error/10 text-error ring-error/20",
@@ -67,7 +68,7 @@ export function Badge({ tone = "neutral", dot, children }: { tone?: Tone; dot?: 
 const STAGE_TONE: Record<Stage, Tone> = {
   new: "info",
   contacted: "accent",
-  demo: "bronze",
+  demo: "aqua",
   trial: "warning",
   paid: "success",
   churned: "error",
@@ -87,13 +88,13 @@ export function Hot() {
 }
 
 /* Each stage owns a color; classes are spelled out so Tailwind can see them */
-const STAGE_STYLE: Record<Stage, { bg: string; text: string; ring: string; from: string; to: string; icon: React.ElementType }> = {
-  new: { bg: "bg-info", text: "text-info", ring: "ring-info/20", from: "from-info", to: "to-info", icon: Sparkles },
-  contacted: { bg: "bg-accent", text: "text-accent", ring: "ring-accent/20", from: "from-accent", to: "to-accent", icon: MessageSquare },
-  demo: { bg: "bg-bronze", text: "text-bronze", ring: "ring-bronze/25", from: "from-bronze", to: "to-bronze", icon: CalendarCheck },
-  trial: { bg: "bg-warning", text: "text-warning", ring: "ring-warning/20", from: "from-warning", to: "to-warning", icon: Rocket },
-  paid: { bg: "bg-success", text: "text-success", ring: "ring-success/20", from: "from-success", to: "to-success", icon: BadgeIndianRupee },
-  churned: { bg: "bg-error", text: "text-error", ring: "ring-error/20", from: "from-error", to: "to-error", icon: UserX },
+const STAGE_STYLE: Record<Stage, { bg: string; text: string; ring: string; icon: React.ElementType }> = {
+  new: { bg: "bg-info", text: "text-info", ring: "ring-info/20", icon: Sparkles },
+  contacted: { bg: "bg-accent", text: "text-accent", ring: "ring-accent/20", icon: MessageSquare },
+  demo: { bg: "bg-aqua", text: "text-aqua", ring: "ring-aqua/20", icon: CalendarCheck },
+  trial: { bg: "bg-warning", text: "text-warning", ring: "ring-warning/20", icon: Rocket },
+  paid: { bg: "bg-success", text: "text-success", ring: "ring-success/20", icon: BadgeIndianRupee },
+  churned: { bg: "bg-error", text: "text-error", ring: "ring-error/20", icon: UserX },
 };
 
 /** Horizontal stepper: done stages filled in their own color, current one ringed, upcoming ones muted */
@@ -123,7 +124,7 @@ export function StageTrack({ stage }: { stage: Stage }) {
               {next && (
                 <span
                   className={`absolute left-1/2 top-[17px] h-[3px] w-full rounded-full ${
-                    done ? `bg-gradient-to-r ${st.from} ${next.to}` : "bg-border-strong/60"
+                    done ? st.bg : "bg-border-strong/60"
                   }`}
                   aria-hidden
                 />
