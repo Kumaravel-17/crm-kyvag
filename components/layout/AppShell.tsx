@@ -3,16 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BarChart3, Bell, LayoutDashboard, Menu, PlusCircle, Search, Users, X } from "lucide-react";
-import { LEADS } from "@/lib/data";
+import { BadgeCheck, Bell, LayoutDashboard, LogOut, Menu, PlusCircle, Settings, Users, X } from "lucide-react";
+import { roleLabel, useAuth } from "@/lib/auth";
+import { refreshPipeline, usePipeline, useStageCounts } from "@/lib/stages";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { Logo } from "./Logo";
-import { IconButton, buttonClass } from "../ui";
+import { Avatar, IconButton, buttonClass } from "../ui";
 
 const NAV = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
-  { href: "/leads", label: "Leads", icon: Users, count: LEADS.filter((l) => l.stage === "new").length },
-  { href: "/analytics", label: "Analytics", icon: BarChart3 },
+  // Badge: leads still in the first stage, waiting for a reply
+  { href: "/leads", label: "Leads", icon: Users, countFirstStage: true },
+  { href: "/customers", label: "Customers", icon: BadgeCheck },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 /** Left sidebar + top bar wrapping every page */
@@ -20,6 +23,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() ?? "/";
   const [open, setOpen] = useState(false);
   useEffect(() => setOpen(false), [path]);
+
+  // Stage counts change as people work leads, so fetch them again on every page and when the tab comes back into view
+  useEffect(() => { refreshPipeline(); }, [path]);
+  useEffect(() => {
+    const onVisible = () => { if (document.visibilityState === "visible") refreshPipeline(); };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, []);
 
   return (
     <div className="flex min-h-screen">
@@ -35,6 +46,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
 function Sidebar({ path, open, onClose }: { path: string; open: boolean; onClose: () => void }) {
   const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+  const pipeline = usePipeline();
+  const counts = useStageCounts();
+  const waiting = counts[pipeline[0]?.id];
 
   return (
     <aside
@@ -54,8 +68,9 @@ function Sidebar({ path, open, onClose }: { path: string; open: boolean; onClose
       {/* Nav */}
       <nav aria-label="Main" className="flex flex-col gap-1 px-3 py-5">
         <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.22em] text-foreground-tertiary/80">Workspace</p>
-        {NAV.map(({ href, label, icon: Icon, count }) => {
+        {NAV.map(({ href, label, icon: Icon, countFirstStage }) => {
           const on = isActive(href);
+          const count = countFirstStage ? waiting : undefined;
           return (
             <Link
               key={href}
@@ -77,23 +92,36 @@ function Sidebar({ path, open, onClose }: { path: string; open: boolean; onClose
 
       {/* Footer */}
       <div className="mt-auto flex flex-col gap-4 p-4">
-        <div className="rounded-xl border border-border bg-surface p-4 shadow-sm">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">This month</p>
-          <p className="mt-1 font-display text-[22px] leading-tight">₹16.7 L MRR</p>
-          <p className="mt-0.5 text-[12px] text-foreground-tertiary">83% of ₹20 L target</p>
-          <div className="mt-3 h-1 overflow-hidden rounded-full bg-surface-sunken ring-1 ring-divider">
-            <div className="h-full w-[83%] rounded-full bg-accent" />
-          </div>
-        </div>
-        <div className="flex items-center gap-3 px-1">
-          <span className="flex size-9 items-center justify-center rounded-full bg-accent/10 text-[11.5px] font-bold text-accent ring-1 ring-accent/15">KM</span>
-          <div className="min-w-0">
-            <p className="truncate text-[13px] font-semibold">Kumaravel M.</p>
-            <p className="truncate text-[11.5px] text-foreground-tertiary">Head of Sales</p>
-          </div>
-        </div>
+     
+        <SignedInUser />
       </div>
     </aside>
+  );
+}
+
+function SignedInUser() {
+  const { user, signOut } = useAuth();
+  const [signingOut, setSigningOut] = useState(false);
+  return (
+    <div className="flex items-center gap-3 px-1">
+      <Link href="/settings" className="flex min-w-0 flex-1 items-center gap-3 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+        <Avatar name={user.name} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[13px] font-semibold">{user.name}</p>
+          <p className="truncate text-[11.5px] text-foreground-tertiary">{user.title || roleLabel(user.role)}</p>
+        </div>
+      </Link>
+      <button
+        type="button"
+        onClick={() => { setSigningOut(true); signOut(); }}
+        disabled={signingOut}
+        aria-label="Sign out"
+        title="Sign out"
+        className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-foreground-tertiary transition-colors hover:bg-error/10 hover:text-error disabled:opacity-50"
+      >
+        <LogOut className="size-4" />
+      </button>
+    </div>
   );
 }
 
@@ -104,11 +132,6 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
         <IconButton aria-label="Open menu" onClick={onMenu} className="lg:hidden">
           <Menu strokeWidth={2} />
         </IconButton>
-        <label className="flex min-w-0 max-w-[480px] flex-1 items-center gap-2 rounded-lg border border-input-border bg-input-bg px-3 py-2 text-foreground-tertiary transition-colors focus-within:border-accent">
-          <Search className="size-4 shrink-0" />
-          <input id="global-search" className="min-w-0 flex-1 bg-transparent text-[13px] text-foreground outline-none placeholder:text-foreground-tertiary" placeholder="Search leads, stores, phones…" />
-          <kbd className="hidden rounded border border-border px-1.5 font-mono text-[10px] sm:block">⌘K</kbd>
-        </label>
         <span className="flex-1" />
         <Link href="/leads?new=1" className={buttonClass("primary", "md", "max-sm:hidden")}>
           <PlusCircle strokeWidth={2.5} />

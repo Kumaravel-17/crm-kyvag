@@ -112,21 +112,34 @@
   --radius-lg: var(--radius-lg);
   --radius-xl: var(--radius-xl);
 
-  --font-display: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
-  --font-sans: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Everything is Inter; code-style text uses it too */
+  --font-mono: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --animate-rise: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   @keyframes rise {
     from { transform: translateY(10px); opacity: 0; }
     to { transform: none; opacity: 1; }
   }
+
+  /* Loader: the logo gently breathes while a bar sweeps under it */
+  --animate-breathe: breathe 1.6s ease-in-out infinite;
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1); opacity: 1; }
+  }
+  --animate-sweep: sweep 1.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  @keyframes sweep {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(300%); }
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -150,7 +163,7 @@ select option { background: var(--surface); }
 .reveal > *:nth-child(4) { animation-delay: 0.15s; }
 .reveal > *:nth-child(5) { animation-delay: 0.2s; }
 
-.chart text { fill: var(--foreground-tertiary); font-size: 10.5px; font-family: var(--font-jakarta), sans-serif; }
+.chart text { fill: var(--foreground-tertiary); font-size: 10.5px; font-family: var(--font-sans); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

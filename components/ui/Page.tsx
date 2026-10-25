@@ -16,17 +16,15 @@ export function PageTitle({
   subtitle?: string;
   actions?: ReactNode;
 }) {
+  // A light accent-tinted banner: small label, title, one-line summary, actions on the right
   return (
-    <header className="flex flex-wrap items-end justify-between gap-5">
+    <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 rounded-xl border border-accent/15 bg-accent/[0.06] px-4 py-4 sm:px-6 sm:py-5">
       <div className="min-w-0">
-        <p className="flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground-tertiary">
-          <span className="size-1.5 rounded-full bg-accent" />
-          {eyebrow}
-        </p>
-        <h1 className="mt-2 font-display text-[24px] leading-[1.1] tracking-tight sm:text-[clamp(28px,3.2vw,44px)] sm:leading-[1.06] [&_em]:not-italic [&_em]:text-accent">
+        <p className="text-[12px] font-medium text-foreground-tertiary">{eyebrow}</p>
+        <h1 className="mt-1 font-display text-[26px] font-semibold leading-tight tracking-tight sm:text-[32px] [&_em]:not-italic [&_em]:text-accent">
           {title}
         </h1>
-        {subtitle && <p className="mt-4 max-w-[64ch] text-[12.5px] text-foreground-tertiary sm:text-[14px]">{subtitle}</p>}
+        {subtitle && <p className="mt-1.5 max-w-[96ch] text-[13px] text-foreground-secondary sm:text-[13.5px]">{subtitle}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </header>

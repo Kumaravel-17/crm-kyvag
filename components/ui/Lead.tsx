@@ -1,9 +1,8 @@
-import { BadgeIndianRupee, CalendarCheck, Check, Flame, MessageSquare, Rocket, Sparkles, UserX } from "lucide-react";
-import { CHANNEL_LABEL, STAGES, type Channel, type Stage } from "@/lib/data";
+import { CHANNEL_LABEL, type Channel } from "@/lib/data";
 import { ChannelGlyph } from "../icons";
 
 export function Avatar({ name, size = "md" }: { name: string; size?: "sm" | "md" | "lg" }) {
-  const initials = name.split(" ").map((w) => w[0]).slice(0, 2).join("");
+  const initials = name.split(" ").filter(Boolean).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   const sizes = {
     sm: "size-6 text-[9.5px]",
     md: "size-9 text-[11.5px]",
@@ -64,88 +63,3 @@ export function Badge({ tone = "neutral", dot, children }: { tone?: Tone; dot?: 
     </span>
   );
 }
-
-const STAGE_TONE: Record<Stage, Tone> = {
-  new: "info",
-  contacted: "accent",
-  demo: "aqua",
-  trial: "warning",
-  paid: "success",
-  churned: "error",
-};
-
-export function StagePill({ stage }: { stage: Stage }) {
-  return <Badge tone={STAGE_TONE[stage]} dot>{STAGES.find((s) => s.id === stage)!.label}</Badge>;
-}
-
-export function Hot() {
-  return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-accent-hover to-accent py-0.5 pl-1.5 pr-2 text-[10px] font-bold uppercase tracking-[0.14em] text-accent-foreground shadow-sm">
-      <Flame className="size-3 fill-current" strokeWidth={0} />
-      Hot
-    </span>
-  );
-}
-
-/* Each stage owns a color; classes are spelled out so Tailwind can see them */
-const STAGE_STYLE: Record<Stage, { bg: string; text: string; ring: string; icon: React.ElementType }> = {
-  new: { bg: "bg-info", text: "text-info", ring: "ring-info/20", icon: Sparkles },
-  contacted: { bg: "bg-accent", text: "text-accent", ring: "ring-accent/20", icon: MessageSquare },
-  demo: { bg: "bg-aqua", text: "text-aqua", ring: "ring-aqua/20", icon: CalendarCheck },
-  trial: { bg: "bg-warning", text: "text-warning", ring: "ring-warning/20", icon: Rocket },
-  paid: { bg: "bg-success", text: "text-success", ring: "ring-success/20", icon: BadgeIndianRupee },
-  churned: { bg: "bg-error", text: "text-error", ring: "ring-error/20", icon: UserX },
-};
-
-/** Horizontal stepper: done stages filled in their own color, current one ringed, upcoming ones muted */
-export function StageTrack({ stage }: { stage: Stage }) {
-  const track = STAGES.filter((s) => s.id !== "churned");
-  const current = track.findIndex((s) => s.id === stage);
-  const churned = stage === "churned";
-
-  return (
-    <div className="flex flex-col gap-4">
-      {churned && (
-        <div className="flex items-center gap-2 text-[12.5px] font-semibold text-error">
-          <UserX className="size-4" />This lead churned. The track shows where they dropped off.
-        </div>
-      )}
-      <ol className="grid grid-cols-5">
-        {track.map((s, i) => {
-          const st = STAGE_STYLE[s.id];
-          const next = track[i + 1] && STAGE_STYLE[track[i + 1].id];
-          const done = !churned && i < current;
-          const isNow = !churned && i === current;
-          const reached = done || isNow;
-          const Icon = done ? Check : st.icon;
-          return (
-            <li key={s.id} className="relative flex flex-col items-center gap-2 text-center">
-              {/* connector to the next step, drawn behind the circles */}
-              {next && (
-                <span
-                  className={`absolute left-1/2 top-[17px] h-[3px] w-full rounded-full ${
-                    done ? st.bg : "bg-border-strong/60"
-                  }`}
-                  aria-hidden
-                />
-              )}
-              <span
-                className={`relative z-[1] flex size-9 items-center justify-center rounded-full transition-all
-                  ${reached ? `${st.bg} text-surface shadow-sm` : "border-2 border-border-strong bg-surface text-foreground-tertiary"}
-                  ${isNow ? `ring-[6px] ${st.ring}` : ""}`}
-              >
-                <Icon className="size-4" strokeWidth={done ? 3 : 2} />
-              </span>
-              <span className="flex flex-col leading-tight">
-                <span className={`text-[12.5px] font-semibold ${reached ? st.text : "text-foreground-tertiary"}`}>{s.label}</span>
-                <span className="text-[11px] text-foreground-tertiary">{done ? "Completed" : isNow ? "Current stage" : "Upcoming"}</span>
-              </span>
-            </li>
-          );
-        })}
-      </ol>
-    </div>
-  );
-}
-
-export const isHot =(l: { score: number; stage: Stage }) => l.score >= 75 && l.stage !== "paid" && l.stage !== "churned";

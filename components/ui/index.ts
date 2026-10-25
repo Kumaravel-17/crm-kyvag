@@ -2,5 +2,8 @@ export * from "./Button";
 export * from "./Card";
 export * from "./StatCard";
 export * from "./Lead";
+export * from "./Stage";
+export * from "./EditControls";
 export * from "./Page";
 export * from "./Pagination";
+export * from "./Loader";

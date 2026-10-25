@@ -37,55 +37,76 @@ export function Pagination({
   sizes?: number[];
   noun?: string;
 }) {
+  // Nothing to page through; the list shows its own empty message
+  if (total === 0) return null;
   const pages = Math.max(1, Math.ceil(total / pageSize));
-  const start = total === 0 ? 0 : (page - 1) * pageSize + 1;
+  const start = (page - 1) * pageSize + 1;
   const end = Math.min(page * pageSize, total);
+  const label = total === 1 ? noun.replace(/s$/, "") : noun;
+  const count = <b className="font-semibold tabular-nums text-foreground">{total.toLocaleString("en-IN")}</b>;
+
+  // Everything fits on the smallest page size: a count is all that's useful
+  if (total <= Math.min(...sizes)) {
+    return (
+      <div className="border-t border-border px-4 py-3 text-[12.5px] text-foreground-tertiary sm:px-5">
+        {count} {label}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-4 py-3 sm:px-5">
-      <div className="flex items-center gap-4 text-[12.5px] text-foreground-tertiary">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] text-foreground-tertiary">
         <span>
-          Showing <b className="font-semibold tabular-nums text-foreground">{start}–{end}</b> of{" "}
-          <b className="font-semibold tabular-nums text-foreground">{total}</b> {noun}
+          <b className="font-semibold tabular-nums text-foreground">{start}–{end}</b> of {count} {label}
         </span>
-        <label className="hidden items-center gap-2 sm:flex">
-          Rows
-          <select
-            id="page-size"
-            value={pageSize}
-            onChange={(e) => onPageSize(Number(e.target.value))}
-            className="cursor-pointer rounded-lg border border-input-border bg-input-bg px-2 py-1 text-[12.5px] font-semibold text-foreground outline-none focus:border-accent"
-          >
-            {sizes.map((s) => <option key={s} value={s}>{s}</option>)}
-          </select>
-        </label>
+        <div className="hidden items-center gap-2 sm:flex">
+          <span id="page-size-label">Per page</span>
+          <div role="radiogroup" aria-labelledby="page-size-label" className="flex rounded-lg bg-surface-sunken p-0.5 ring-1 ring-divider">
+            {sizes.map((size) => (
+              <button
+                key={size}
+                type="button"
+                role="radio"
+                aria-checked={size === pageSize}
+                onClick={() => onPageSize(size)}
+                className={`h-6 min-w-8 cursor-pointer rounded-md px-2 text-[12px] font-semibold tabular-nums transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent
+                  ${size === pageSize ? "bg-surface text-accent shadow-sm" : "text-foreground-tertiary hover:text-foreground"}`}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <nav aria-label="Pagination" className="flex items-center gap-1">
-        <button className={navBtn} onClick={() => onPage(page - 1)} disabled={page <= 1} aria-label="Previous page">
-          <ChevronLeft className="size-4" />
-          <span className="hidden sm:inline">Prev</span>
-        </button>
-        {pageList(page, pages).map((p, i) =>
-          p === "gap" ? (
-            <span key={`gap${i}`} className="px-1 text-foreground-tertiary">…</span>
-          ) : (
-            <button
-              key={p}
-              onClick={() => onPage(p)}
-              aria-current={p === page ? "page" : undefined}
-              className={`size-8 cursor-pointer rounded-lg text-[12.5px] font-semibold tabular-nums transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent
-                ${p === page ? "bg-accent text-accent-foreground shadow-sm" : "text-foreground-secondary hover:bg-border/50 hover:text-foreground"}`}
-            >
-              {p}
-            </button>
-          ),
-        )}
-        <button className={navBtn} onClick={() => onPage(page + 1)} disabled={page >= pages} aria-label="Next page">
-          <span className="hidden sm:inline">Next</span>
-          <ChevronRight className="size-4" />
-        </button>
-      </nav>
+      {pages > 1 && (
+        <nav aria-label="Pagination" className="flex items-center gap-1">
+          <button className={navBtn} onClick={() => onPage(page - 1)} disabled={page <= 1} aria-label="Previous page">
+            <ChevronLeft className="size-4" />
+            <span className="hidden sm:inline">Prev</span>
+          </button>
+          {pageList(page, pages).map((p, i) =>
+            p === "gap" ? (
+              <span key={`gap${i}`} className="px-1 text-foreground-tertiary">…</span>
+            ) : (
+              <button
+                key={p}
+                onClick={() => onPage(p)}
+                aria-current={p === page ? "page" : undefined}
+                className={`size-8 cursor-pointer rounded-lg text-[12.5px] font-semibold tabular-nums transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent
+                  ${p === page ? "bg-accent text-accent-foreground shadow-sm" : "text-foreground-secondary hover:bg-border/50 hover:text-foreground"}`}
+              >
+                {p}
+              </button>
+            ),
+          )}
+          <button className={navBtn} onClick={() => onPage(page + 1)} disabled={page >= pages} aria-label="Next page">
+            <span className="hidden sm:inline">Next</span>
+            <ChevronRight className="size-4" />
+          </button>
+        </nav>
+      )}
     </div>
   );
 }
